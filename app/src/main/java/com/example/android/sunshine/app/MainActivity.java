@@ -8,6 +8,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -21,6 +25,8 @@ public class MainActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
+
     }
 
     @Override
@@ -57,6 +63,28 @@ public class MainActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+            //Creating some fake data to populate in our ListView
+            ArrayList fakeWeeklyData = new ArrayList();
+            fakeWeeklyData.add("Today-Sunny-88/63");
+            fakeWeeklyData.add("Tomorrow-Foggy-70/46");
+            fakeWeeklyData.add("Weds-Cloudy-72/63");
+            fakeWeeklyData.add("Thurs-Rainy-64/51");
+            fakeWeeklyData.add("Fri-Foggy-70/46");
+            fakeWeeklyData.add("Sat-Sunny-76/68");
+
+            ArrayAdapter forecastAdapter = new ArrayAdapter(
+                    // The current context (this fragment's parent activity)
+                    getActivity(),
+                    // ID of list item layout
+                    R.layout.list_item_forecast,
+                    // ID of the textview to populate
+                    R.id.list_item_forecast_textview,
+                    // The forecast data
+                    fakeWeeklyData);
+
+            ListView forecast = (ListView)rootView.findViewById(R.id.listview_forecast);
+            forecast.setAdapter(forecastAdapter);
             return rootView;
         }
     }
